@@ -2,7 +2,9 @@
 Create interaction points in the world with selectable options.
 
 # Credits
+PierreMoraes   Discord: pierre4235
 [ChatDisabled](https://github.com/Chatdisabled)
+
 
 [Devyn](https://github.com/darktrovx)
 
@@ -23,6 +25,49 @@ Functions
 Client Events
 Server Events
 ```
+## Config intems on type objects
+1=buildings
+4 npc
+16=vehicles
+256=peds
+```lua
+
+nearbyObjectDistance = 20.0, -- Keep it at 15.0 at minimum.
+wallDetection = {
+    enabled = true, -- Enable/disable wall detection for interactions
+    rayFlags = 1 + 4 + 16 + 256, -- Ray flags for wall detection (1=buildings, 4 npc, 16=vehicles, 256=peds)
+},
+
+```
+## Config Trunk on ox_inventory
+```lua
+vehicleBoneDefaults = {
+    enabled = true,
+    bones = {
+        ['boot']= {
+            distance = 3.5,
+            interactDst = 2.0,
+            offset = vec3(0.0, 1.0, 0.0),
+            options = {
+                {
+                    name = 'interact:trunk',
+                    label = 'Porta-malas',
+                    action = function(entity)
+                        ToggleDoor(entity, BackEngineVehicles[GetEntityModel(entity)] and 4 or 5)
+                        TriggerEvent('ox_inventory:openInventory', 'trunk', {
+                            id = 'trunk'..GetVehicleNumberPlateText(entity),
+                            netid = NetworkGetNetworkIdFromEntity(entity),
+                            entityid = entity,
+                            door = BackEngineVehicles[GetEntityModel(entity)] and 4 or 5
+                        })
+                    end,
+                }
+            },
+        }
+    }
+},
+```
+
 
 # Options Format
 
