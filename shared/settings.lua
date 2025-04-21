@@ -75,7 +75,6 @@ return {
     wallDetection = {
         enabled = true, -- Enable/disable wall detection for interactions
         rayFlags = 1 + 4 + 16 + 256, -- Ray flags for wall detection (1=buildings, 4 npc, 16=vehicles, 256=peds)
-        rayFlagsVeh = 1 + 4 + 256, -- Ray flags for wall detection (1=buildings, 4 npc, 16=vehicles, 256=peds)
     },
 
     vehicleBoneDefaults = {
@@ -90,13 +89,13 @@ return {
                         name = 'interact:trunk',
                         label = 'Porta-malas',
                         action = function(entity)
-                            ToggleDoor(entity, BackEngineVehicles[GetEntityModel(entity)] and 4 or 5)
                             TriggerEvent('ox_inventory:openInventory', 'trunk', {
                                 id = 'trunk'..GetVehicleNumberPlateText(entity),
                                 netid = NetworkGetNetworkIdFromEntity(entity),
                                 entityid = entity,
                                 door = BackEngineVehicles[GetEntityModel(entity)] and 4 or 5
                             })
+                            --ToggleDoor(entity, BackEngineVehicles[GetEntityModel(entity)] and 4 or 5)
                         end,
                     }
                 },
